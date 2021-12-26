@@ -1,0 +1,65 @@
+﻿{
+  "output_file": "settings.json",
+  "PlayNewChatterSound": {
+    "type": "checkbox",
+    "value": false,
+    "label": "Play New Chatter Sound",
+    "tooltip": "Whether or not to play a sound when a new chatter joins the stream.",
+    "group": "Audio"
+  },
+  "NewChatterSoundLocation": {
+    "type": "textbox",
+    "value": "./Services/Scripts/NewChatter/newchatter.mp3",
+    "label": "New Chatter Sound Location",
+    "tooltip": "The file location of the sound to play when a new chatter joins the stream.",
+    "group": "Audio"
+  },
+  "Volume": {
+    "type": "slider",
+    "label": "Volume",
+    "value": 50,
+    "min": 1,
+    "max": 100,
+    "ticks": 1,
+    "tooltip": "Volume for new chatter sound.",
+    "group": "Audio"
+  },
+  "TestSound": {
+    "type": "button",
+    "label": "Test Sound (Save First)",
+    "tooltip": "Test sound & volume!\r\nMust save settings first!",
+    "function": "BtnTestSound",
+    "wsevent": "",
+    "group": "Audio"
+  },
+  "SendNewChatterMessage": {
+    "type": "checkbox",
+    "value": false,
+    "label": "Reply to New Chatter",
+    "tooltip": "Use the message above to send a message to the new chatter.",
+    "group": "Message"
+  },
+  "NewChatterMessage": {
+    "type": "textbox",
+    "value": "Welcome to the stream {0}! <3",
+    "label": "Message",
+    "tooltip": "Message to send, if left blank this message will not be sent! \r\n{0} = Username",
+    "group": "Message"
+  },
+  "BtnResetUserFile": {
+    "type": "button",
+    "label": "Reset User File",
+    "tooltip": "Resets the list of users who have chatted in this stream. \r\nUser file is reset every time the chatbot is opened.",
+    "function": "BtnResetUserList",
+    "wsevent": "",
+    "group": ""
+  },
+  "BtnDefaults": {
+    "type": "button",
+    "label": "Restore Default Settings",
+    "tooltip": "Reset settings back to defaults.\r\nReload Scripts afterwards to see the changes in the user interface!",
+    "function": "BtnResetDefaults",
+    "wsevent": "",
+    "group": ""
+  }
+}
