@@ -9,7 +9,6 @@
 import codecs
 import json
 import os
-import re
 import ctypes
 import winsound
 
@@ -19,13 +18,14 @@ import winsound
 ScriptName = "New Chatter Notification"
 Website = ""
 Creator = "MasterKriff"
-Version = "1.0"
+Version = "1.1"
 Description = "Play a sound if there is a new chatter in the stream."
 
 #---------------------------------------
 # Versions
 #---------------------------------------
 """ Releases (open README.txt for full release notes)
+1.1 - Fix for non-UTF characters
 1.0 - Initial Release
 """
 
@@ -35,7 +35,7 @@ Description = "Play a sound if there is a new chatter in the stream."
 SettingsFile = os.path.join(os.path.dirname(__file__), "settings.json")
 UserListFile = os.path.join(os.path.dirname(__file__), "userlist.txt")
 MessageBox = ctypes.windll.user32.MessageBoxW
-
+debugLogs = False
 #---------------------------------------
 # Classes
 #---------------------------------------
@@ -105,27 +105,37 @@ def ReloadSettings(jsondata):
 #---------------------------------------
 # Base Functions
 #---------------------------------------
+def DebugLog(msg):
+    """Use this function to output debug messages to the chat"""
+    if debugLogs:
+        Parent.Log(ScriptName, msg)
+
 def ResetUserListFile():
     """Resets the user list file"""
     with open(UserListFile, "w") as f:
         f.write("")
+    DebugLog("User list file reset")
 
 def IsUsernameInList(username):
     """Returns true if user is in the user list file"""
     with open(UserListFile, "r") as f:
-        for line in f:
+        for line in f.read().decode('utf-8').splitlines():
             if line.strip() == username:
                 return True
+    DebugLog("User \"{0}\" NOT found in user list".format(username))
     return False
 
 def AddUserToList(username):
     """Add username to the user list file"""
+    encodedUsername = username.encode('utf-8')
     with open(UserListFile, "a") as f:
-        f.write(username + "\n")
+        DebugLog("Adding \"{0}\" to user list".format(encodedUsername))
+        f.write("{0}\n".format(encodedUsername))
 
 def SendChatMessage(message):
     """Required SendChatMessage function"""
     Parent.SendStreamMessage(message)
+    DebugLog("Sent message: {0}".format(message))
 
 def PlayNewChatterSound():
     """Plays a sound when a new chatter joins the stream"""
